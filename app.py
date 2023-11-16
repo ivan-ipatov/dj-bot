@@ -11,6 +11,6 @@ async def main():
     await bot.delete_webhook(drop_pending_updates=True) # disable answering after shutdown
     await dp.start_polling(bot)
 
-keep_alive()
 if __name__ == '__main__':
+    keep_alive()
     asyncio.run(main())
