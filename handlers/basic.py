@@ -1,6 +1,7 @@
 import random
 
 from aiogram import Router, F
+from aiogram.enums import content_type
 from aiogram.filters import Command
 from aiogram.types import Message
 from keyboards import menu_keyboard
