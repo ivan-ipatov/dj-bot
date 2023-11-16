@@ -25,9 +25,15 @@ async def set_review(message: Message, state: FSMContext):
 async def send_review(message: Message, state: FSMContext, bot: Bot):
     await state.update_data(review=message.text)
     data = await state.get_data()
-    await bot.send_message(os.environ["ADMIN_ID"],f"👉 Отзыв от {message.from_user.first_name} {message.from_user.last_name}\n\n"
-                                                  f"{data['review']}\n\n"
-                                                  f"▶ @{message.from_user.username}")
+    if data["review"] is not None:
+        await bot.send_message(os.environ["ADMIN_ID"],f"👉 Отзыв от {message.from_user.first_name} {message.from_user.last_name}\n\n"
+                                                      f"{data['review']}\n\n"
+                                                      f"▶ @{message.from_user.username}")
+    else:
+        await bot.send_message(os.environ["ADMIN_ID"],
+                               f"Отзыв от {message.from_user.first_name} {message.from_user.last_name}\n"
+                               f"▶ @{message.from_user.username}")
+        await message.send_copy(os.environ["ADMIN_ID"])
     await state.clear()
     await message.answer("Отзыв отправлен, спасибо ✨")
     await message.answer_sticker(

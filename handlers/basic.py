@@ -73,9 +73,7 @@ async def bye(message: Message):
 # Unexpected message
 @router.message()
 async def default(message: Message):
-    stickers = ["CAACAgIAAxkBAAEKuXJlTgJB5IH-C9R4ds1auxUhSrT7swAC8g8AAiPMeEnhoUI9nHuCtTME",
-                "CAACAgIAAxkBAAEKwEtlU9KPMOe-8I-Zjf4qEMZ2a8YzqwACkUsAAulVBRi55GuHH19IrjME",
-                "CAACAgIAAxkBAAEKuXZlTgK51S3ibNKn-w_xbsKAcj4IwQACfwUAAj-VzAqgnsuFcST4RTME",
-                "CAACAgEAAxkBAAEKwE1lU9LX2u_Qee2qKSzqtPiWIl6R4gACggkAAr-MkASrQ88OYNnBpjME",
-                "CAACAgIAAxkBAAEKwFNlU9NbeDpBIXUUJzYBo5t8QliCXQACGAADwDZPE9b6J7-cahj4MwQ"]
+    stickers = ["CAACAgIAAxkBAAEKxINlVn4UgQT0RIB23CXrUsYghXDK2QAClh8AAmytIUkmN-0qNzZa3zME",
+                "CAACAgIAAxkBAAEKxAVlVjA34eYxpdMAAVClLzRmSbmojVcAAmggAAJz1CFJF3760j-oka4zBA",
+                "CAACAgIAAxkBAAEKxIVlVn5iGT4Uv-KgV4Bfqw-tVp1BUAACUB8AAhPkIElqepY7WevrkjME"]
     await message.answer_sticker(random.choice(stickers))
