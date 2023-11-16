@@ -34,7 +34,7 @@ async def set_song_message(message: Message, state: FSMContext):
 async def order_song(message: Message, state: FSMContext):
     await state.update_data(song=message.text)
     data = await state.get_data()
-    if isinstance(data["song"], str) and len(data["song"]) < 4: # if song is text message and more 4 letters
+    if isinstance(data["song"], str) and len(data["song"]) > 3: # if song is text message and more 4 letters
         await send_song_go_menu(message, state, data)
     else:
         await set_song_again(message, state)
