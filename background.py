@@ -6,8 +6,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return '''
-<!DOCTYPE html>
+    return '''<!DOCTYPE html>
 <html lang="ru">
 
 <head>
@@ -23,15 +22,14 @@ def home():
 </head>
 
 <body>
-  <div class="grid h-screen place-content-center font-[Manrope]">
+  <div class="grid h-screen place-content-center font-[Manrope] bg-blue-200/60">
     <h1 class="font-black text-[35px] mb-4">Я в порядке</h1>
-    <a href="https://t.me/rtf_dj_bot" target="_blank" class="text-center bg-blue-400 py-3 rounded-full text-white">Написать боту</a>
+    <a href="https://t.me/rtf_dj_bot" target="_blank" class="text-center bg-blue-500 py-3 rounded-full text-white hover:bg-blue-700 transition-colors">Написать боту</a>
   </div>
 
 </body>
 
-</html>
-    '''
+</html>'''
 
 
 def run():
