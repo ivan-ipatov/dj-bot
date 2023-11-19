@@ -1,33 +1,16 @@
 import random
 
 from aiogram import Router, F
-from aiogram.enums import content_type
 from aiogram.filters import Command
 from aiogram.types import Message
+
+from admin.order_toggle_func import get_toggle_true_order
+from core.put_like_func import get_like
+from admin.toggle_func import get_toggle_true
 from keyboards import menu_keyboard
 from keyboards.builder_keyboard import builder_kb
 
 router = Router()
-like = 0
-
-
-def increase_like():
-    global like
-    like += 1
-
-
-def get_like():
-    return like
-
-
-# Swears
-@router.message(F.text, lambda msg: any(x in msg.text.lower() for x in
-                                        ["блять", "сука", "пизда", "пидр", "пидарас", "мразь", "мудак", "blyat",
-                                         "pizda", "нахуй", "еблан", "шлюха", "тварь"]))
-async def censure(message: Message):
-    await message.delete()
-    await message.answer("Без мата, пожалуйста ⛔")
-    await message.answer_sticker("CAACAgIAAxkBAAEKw_BlViXvxYsB3YiXH22plGK6eifXRQACOxoAAsr-KEm4ngABDdTYwQMzBA")
 
 
 # /start
@@ -45,7 +28,8 @@ async def start(message: Message):
 @router.message(Command(commands=["menu", "меню", "менб", "vty."]))
 @router.message(F.text, lambda msg: any(x in msg.text.lower() for x in ["menu", "меню", "менб", "vty."]))
 async def menu(message: Message):
-    await message.answer("🌐 Выбери действие из меню:", reply_markup=menu_keyboard.builder_menu_kb(get_like()))
+    await message.answer("🌐 Выбери действие из меню:",
+                         reply_markup=menu_keyboard.builder_menu_kb(get_like(), get_toggle_true(), get_toggle_true_order(), message.from_user.id))
 
 
 # Greeting

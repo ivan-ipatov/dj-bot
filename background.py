@@ -1,35 +1,26 @@
-from flask import Flask
+import os
+from flask import Flask, render_template
 from threading import Thread
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+from admin.order_toggle_func import get_toggle_true_order
+from admin.toggle_func import get_toggle_true
+
+# Fetch the service account key JSON file contents
+cred = credentials.Certificate('botdb.json')
+
+# Initialize the app with a service account, granting admin privileges
+fb_app = firebase_admin.initialize_app(cred, {
+    'databaseURL': os.environ['DB_URL']
+})
 
 app = Flask('')
 
 
 @app.route('/')
 def home():
-    return '''<!DOCTYPE html>
-<html lang="ru">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600&display=swap" rel="stylesheet">
-  <title>Чат-бот</title>
-</head>
-
-<body>
-  <div class="grid h-screen place-content-center font-[Manrope] bg-blue-200/60">
-    <h1 class="font-black text-[35px] mb-4">Я в порядке</h1>
-    <a href="https://t.me/rtf_dj_bot" target="_blank" class="text-center bg-blue-500 py-3 rounded-full text-white hover:bg-blue-700 transition-colors">Написать боту</a>
-  </div>
-
-</body>
-
-</html>'''
+    return render_template('home.html', toggle=get_toggle_true(), toggle_order=get_toggle_true_order(), dj_name=str(db.reference('dj-name').get()))
 
 
 def run():

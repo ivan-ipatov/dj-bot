@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600&display=swap" rel="stylesheet">
+    <title>Чат-бот</title>
+</head>
+
+<body>
+<div class="grid h-screen place-content-center font-[Manrope] bg-blue-200/60">
+    <h1 class="font-black text-[35px] mb-4 text-center">Я в порядке</h1>
+    <a href="https://t.me/rtf_dj_bot" target="_blank"
+       class="text-center bg-blue-500 py-3 rounded-full text-white hover:bg-blue-700 transition-colors mb-10">Написать
+        боту</a>
+    <h2 class="font-bold text-[23px] mb-4 text-center">Состояние режимов:</h2>
+    {% if toggle %}
+    <div class="text-center bg-green-500 py-2 px-4 rounded text-white select-none mb-2">
+        Мероприятия включён
+    </div>
+    {% else %}
+    <div class="text-center bg-red-500 py-2 px-4 rounded text-white select-none mb-2">
+        Мероприятия выключен
+    </div>
+    {% endif %}
+    {% if toggle_order and toggle %}
+    <div class="text-center bg-green-500 py-2 px-4 rounded text-white select-none mb-4">
+        Заказ песен включён
+    </div>
+    {% else %}
+    <div class="text-center bg-red-500 py-2 px-4 rounded text-white select-none mb-4">
+        Заказ песен выключен
+    </div>
+    {% endif %}
+    <div class="text-center text-[18px]">
+        Сейчас DJ является: <span class="font-bold">{{ dj_name }}</span>
+    </div>
+
+</div>
+
+</body>
+
+</html>
