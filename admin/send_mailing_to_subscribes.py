@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import Router, F, Bot
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
@@ -55,6 +57,6 @@ async def copy_and_send_message_to_users(message: Message, bot: Bot, state: FSMC
                 count += 1
                 await bot.copy_message(chat_id=user, from_chat_id=message.chat.id, message_id=message.message_id)
         await message.answer(f"ℹ Ваше сообщение было отправлено {count} пользователям")
-        print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username}\n"
+        logging.info(f"Рассылка от {message.from_user.full_name} @{message.from_user.username}\n"
               f"Текст: {message.text if message.text is not None else message.caption}")
     await basic.menu(message)

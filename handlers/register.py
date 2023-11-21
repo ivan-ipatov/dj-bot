@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import Router
 from aiogram.types import Message
 from firebase_admin import db
@@ -31,7 +33,7 @@ async def register(message: Message):
             }
         }
     })
-    print(f'Пользователь {message.from_user.full_name} @{message.from_user.username} зарегистрировался')
+    logging.info(f'Пользователь {message.from_user.full_name} @{message.from_user.username} зарегистрировался')
     await message.answer(
         "Привет 👋\n"
         "Я бот-помощник Ипатова Ивана,\n"

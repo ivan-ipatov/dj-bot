@@ -114,7 +114,7 @@ async def send_song_go_menu(message, state, data):
         f"{message.from_user.first_name} {message.from_user.last_name} @{message.from_user.username} ID: "
         f"{message.from_user.id}",
         data)
-    print(f'Заказана песня: "{data}", от пользователя: @{message.from_user.username} ID: {message.from_user.id}')
+    logging.info(f'Заказана песня: "{data}", от пользователя: @{message.from_user.username} ID: {message.from_user.id}')
     await state.clear()
     await message.answer("Песня отправлена 💙")
     await message.answer_sticker("CAACAgIAAxkBAAEKw-xlViRRN89v0aRX4lqLAAE_8-WkTtwAAhAgAAJ4iilJz8JKJAMRcx8zBA")
