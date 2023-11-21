@@ -1,9 +1,13 @@
-import os
 import requests
 from firebase_admin import db
 
 
-async def send_song(name: str, message: str):
+async def post_data_to_virualdj(name: str, message: str):
+    """
+    Post data to https://virtualdj.com/ask for order songs
+    :param name: str
+    :param message: str
+    """
     data = {
         'name': name,
         'message': message

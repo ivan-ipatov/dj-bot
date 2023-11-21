@@ -8,10 +8,21 @@ from firebase_admin import db
 from filters.is_admin import IsAdmin
 from handlers import basic
 
+"""
+Only admin command
+Change global DJ name and URL for Virtual DJ
+"""
+
 router = Router()
+
+
 @router.message(IsAdmin(), Command("ChangeDJ"))
 @router.message(IsAdmin(), F.text.lower().in_(["🔄 смена", "смена", "сменить dj"]))
 async def change_dj(message: Message):
+    """
+    Change DJ name and URL
+    :param message: Message
+    """
     if str(db.reference('dj-name').get()) == os.environ['DJ_NAME']:
         db.reference('dj-name').set(os.environ['DJ_NAME_2'])
         db.reference('dj-url').set(os.environ['DJ_URL_2'])

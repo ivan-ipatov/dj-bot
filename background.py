@@ -1,11 +1,13 @@
 import os
-from flask import Flask, render_template
 from threading import Thread
+
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
-from admin.order_toggle_func import get_toggle_true_order
-from admin.toggle_func import get_toggle_true
+from flask import Flask, render_template
+
+from admin.toggle_event_mode import get_state_of_event_mode
+from admin.toggle_order_songs_mode import get_state_of_order_songs_mode
 
 # Fetch the service account key JSON file contents
 cred = credentials.Certificate('botdb.json')
@@ -20,7 +22,9 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return render_template('home.html', toggle=get_toggle_true(), toggle_order=get_toggle_true_order(), dj_name=str(db.reference('dj-name').get()))
+    return render_template('home.html', state_event_mode=get_state_of_event_mode(), state_songs_order_mode=get_state_of_order_songs_mode(),
+                           dj_name=str(
+                               db.reference('dj-name').get()))
 
 
 def run():

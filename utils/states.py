@@ -1,7 +1,7 @@
 from aiogram.fsm.state import State, StatesGroup
 
 
-class OrderSongList(StatesGroup):
+class OrderSong(StatesGroup):
     song = State()
 
 
@@ -9,18 +9,18 @@ class Reviews(StatesGroup):
     review = State()
 
 
-class Permission(StatesGroup):
-    perm = State()
+class RequestForToggleOrderSongsMode(StatesGroup):
+    confirm = State()
 
 
-class PermissionOrder(StatesGroup):
-    perm = State()
+class RequestForToggleEventMode(StatesGroup):
+    confirm = State()
 
 
 class BanUser(StatesGroup):
-    ban = State()
+    ban_id = State()
     reason = State()
 
 
-class SendToAll(StatesGroup):
-    mes = State()
+class Mailing(StatesGroup):
+    message = State()
