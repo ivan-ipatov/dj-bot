@@ -19,7 +19,7 @@ async def register(message: Message):
             'username': f'@{message.from_user.username}',
             'first_name': f'{message.from_user.first_name}',
             'last_name': f'{message.from_user.last_name if message.from_user.last_name is not None else ""}',
-            'full_name': f'{message.from_user.first_name}{" " + message.from_user.last_name if message.from_user.last_name is not None else ""}',
+            'full_name': f'{message.from_user.full_name}',
             'subscription': True,
             'role': {
                 'admin': False,
@@ -31,6 +31,7 @@ async def register(message: Message):
             }
         }
     })
+    print(f'Пользователь {message.from_user.full_name} @{message.from_user.username} зарегистрировался')
     await message.answer(
         "Привет 👋\n"
         "Я бот-помощник Ипатова Ивана,\n"
