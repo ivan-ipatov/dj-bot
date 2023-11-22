@@ -10,9 +10,9 @@ from admin.toggle_event_mode import get_state_of_event_mode
 from admin.toggle_order_songs_mode import get_state_of_order_songs_mode
 import logging
 
-# Only errors logging
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+##Only errors logging
+# log = logging.getLogger('werkzeug')
+# log.setLevel(logging.ERROR)
 
 # Fetch the service account key JSON file contents
 cred = credentials.Certificate('botdb.json')
