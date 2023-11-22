@@ -24,3 +24,4 @@ class BanUser(StatesGroup):
 
 class Mailing(StatesGroup):
     message = State()
+    for_which_role = State()

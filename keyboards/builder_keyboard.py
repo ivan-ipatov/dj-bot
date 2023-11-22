@@ -8,12 +8,13 @@ def build_kb(text: str | list):
     :param text: str | list
     :return: ReplyKeyboardBuilder
     """
+    builder = ReplyKeyboardBuilder()
 
     if isinstance(text, str):
         text = [text]
 
-    [ReplyKeyboardBuilder().button(text=txt) for txt in text]
-    return ReplyKeyboardBuilder().as_markup(resize_keyboard=True, one_time_keyboard=True)
+    [builder.button(text=txt) for txt in text]
+    return builder.as_markup(resize_keyboard=True, one_time_keyboard=True)
 
 
 rmk = ReplyKeyboardRemove()

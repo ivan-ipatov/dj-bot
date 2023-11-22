@@ -49,9 +49,9 @@ async def send_result(message: Message, state: FSMContext):
     if str(data["confirm"]) == "Да":
         toggle_order_songs_mode()
         if get_state_of_order_songs_mode() is True:
-            logging.info(f"Админ: @{message.from_user_username} запустил режим заказа песен")
+            print(f"Админ: @{message.from_user_username} запустил режим заказа песен")
             await message.answer("✅ Режим заказа песен успешно включён", reply_markup=rmk)
         else:
-            logging.info(f"Админ: @{message.from_user_username} выключил режим заказа песен")
+            print(f"Админ: @{message.from_user_username} выключил режим заказа песен")
             await message.answer("❌ Режим заказа песен успешно выключен", reply_markup=rmk)
     await basic.menu(message)
