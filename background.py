@@ -1,3 +1,4 @@
+import logging
 import os
 from threading import Thread
 
@@ -8,7 +9,6 @@ from flask import Flask, render_template, send_from_directory, request
 
 from admin.toggle_event_mode import get_state_of_event_mode
 from admin.toggle_order_songs_mode import get_state_of_order_songs_mode
-import logging
 
 # Only errors logging
 log = logging.getLogger('werkzeug')
@@ -23,6 +23,14 @@ fb_app = firebase_admin.initialize_app(cred, {
 })
 
 app = Flask('')
+
+
+def logging(log):
+    """
+    Send log into console
+    :param log: str
+    """
+    app.logger.info(log)
 
 
 @app.route('/')

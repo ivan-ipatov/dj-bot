@@ -5,6 +5,7 @@ from aiogram.types import Message
 from firebase_admin import db
 
 from admin.toggle_event_mode import toggle_event_mode, get_state_of_event_mode
+from background import logging
 from filters.is_admin import IsAdmin
 from handlers import basic
 from keyboards.builder_keyboard import build_kb, rmk
@@ -50,9 +51,9 @@ async def send_result(message: Message, state: FSMContext):
         toggle_event_mode()
         if get_state_of_event_mode() is True:
             db.reference('likes').set(0)
-            print(f"Админ: @{message.from_user.username} запустил режим мероприятия")
+            logging(f"Админ: @{message.from_user.username} запустил режим мероприятия")
             await message.answer("✅ Режим мероприятия успешно включён", reply_markup=rmk)
         else:
-            print(f"Админ: @{message.from_user.username} выключил режим мероприятия")
+            logging(f"Админ: @{message.from_user.username} выключил режим мероприятия")
             await message.answer("❌ Режим мероприятия успешно выключен", reply_markup=rmk)
     await basic.menu(message)

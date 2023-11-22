@@ -1,11 +1,10 @@
-import logging
-
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from admin.toggle_order_songs_mode import get_state_of_order_songs_mode, toggle_order_songs_mode
+from background import logging
 from filters.is_admin import IsAdmin
 from handlers import basic
 from keyboards.builder_keyboard import build_kb, rmk
@@ -49,9 +48,9 @@ async def send_result(message: Message, state: FSMContext):
     if str(data["confirm"]) == "Да":
         toggle_order_songs_mode()
         if get_state_of_order_songs_mode() is True:
-            print(f"Админ: @{message.from_user.username} запустил режим заказа песен")
+            logging(f"Админ: @{message.from_user.username} запустил режим заказа песен")
             await message.answer("✅ Режим заказа песен успешно включён", reply_markup=rmk)
         else:
-            print(f"Админ: @{message.from_user.username} выключил режим заказа песен")
+            logging(f"Админ: @{message.from_user.username} выключил режим заказа песен")
             await message.answer("❌ Режим заказа песен успешно выключен", reply_markup=rmk)
     await basic.menu(message)
