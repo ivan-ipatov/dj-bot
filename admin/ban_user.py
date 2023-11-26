@@ -4,7 +4,6 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from firebase_admin import db
 
-from background import logging
 from filters.is_admin import IsAdmin
 from handlers import basic
 from keyboards.builder_keyboard import rmk, build_kb
@@ -72,7 +71,7 @@ async def ban_user(message: Message, state: FSMContext, bot: Bot):
         else:
             db.reference(f'/users/{ban_id}/ban/banned').set(True)
             db.reference(f'/users/{ban_id}/ban/ban_reason').set(reason)
-            logging(f"Админ: @{message.from_user.username} забанил @{ban_username}, причина: {reason}")
+            print(f"Админ: @{message.from_user.username} забанил @{ban_username}, причина: {reason}")
             await bot.send_message(int(ban_id), f"О нет, кажется, тебя забанил администратор 😨\n\n"
                                                 f"▶ Причина блокировки: {reason}\n"
                                                 f"✳ Для разбана обращаться: {db.reference('main-admin-username').get()}",

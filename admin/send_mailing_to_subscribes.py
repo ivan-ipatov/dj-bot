@@ -4,7 +4,6 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from firebase_admin import db
 
-from background import logging
 from filters.is_admin import IsAdmin
 from filters.is_prof_bureau import IsProfBureau
 from handlers import basic
@@ -74,12 +73,12 @@ async def copy_and_send_message_to_users(message: Message, bot: Bot, state: FSMC
                     await bot.copy_message(chat_id=user, from_chat_id=message.chat.id, message_id=message.message_id)
         if data["for_which_role"].lower() == 'для профбюро' or data["for_which_role"].lower() == 'для проф бюро':
             await message.answer(f"ℹ Ваше сообщение было отправлено {count} членам профбюро")
-            logging(
+            print(
                 f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для профбюро\n"
                 f"Текст: {message.text if message.text is not None else message.caption}")
         else:
             await message.answer(f"ℹ Ваше сообщение было отправлено {count} пользователям")
-            logging(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для всех\n"
+            print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для всех\n"
                   f"Текст: {message.text if message.text is not None else message.caption}")
 
     await basic.menu(message)
