@@ -2,7 +2,6 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
-from termcolor import colored
 
 from admin.toggle_order_songs_mode import get_state_of_order_songs_mode, toggle_order_songs_mode
 from filters.is_admin import IsAdmin
@@ -48,9 +47,9 @@ async def send_result(message: Message, state: FSMContext):
     if str(data["confirm"]) == "Да":
         toggle_order_songs_mode()
         if get_state_of_order_songs_mode() is True:
-            print(colored(f"Админ: @{message.from_user.username} запустил режим заказа песен", "cyan"))
+            print(f"Админ: @{message.from_user.username} запустил режим заказа песен")
             await message.answer("✅ Режим заказа песен успешно включён", reply_markup=rmk)
         else:
-            print(colored(f"Админ: @{message.from_user.username} выключил режим заказа песен"), "light_red")
+            print(f"Админ: @{message.from_user.username} выключил режим заказа песен")
             await message.answer("❌ Режим заказа песен успешно выключен", reply_markup=rmk)
     await basic.menu(message)

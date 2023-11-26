@@ -3,7 +3,6 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from firebase_admin import db
-from termcolor import colored
 
 from filters.is_admin import IsAdmin
 from filters.is_prof_bureau import IsProfBureau
@@ -74,11 +73,11 @@ async def copy_and_send_message_to_users(message: Message, bot: Bot, state: FSMC
                     await bot.copy_message(chat_id=user, from_chat_id=message.chat.id, message_id=message.message_id)
         if data["for_which_role"].lower() == 'для профбюро' or data["for_which_role"].lower() == 'для проф бюро':
             await message.answer(f"ℹ Ваше сообщение было отправлено {count} членам профбюро")
-            print(colored(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для профбюро\n"
-                          f"Текст: {message.text if message.text is not None else message.caption}", "light_blue"))
+            print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для профбюро\n"
+                  f"Текст: {message.text if message.text is not None else message.caption}")
         else:
             await message.answer(f"ℹ Ваше сообщение было отправлено {count} пользователям")
-            print(colored(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для всех\n"
-                          f"Текст: {message.text if message.text is not None else message.caption}", "magenta"))
+            print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для всех\n"
+                  f"Текст: {message.text if message.text is not None else message.caption}")
 
     await basic.menu(message)

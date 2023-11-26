@@ -1,6 +1,3 @@
-import operator
-
-from aiogram.types import Message
 from firebase_admin import db
 
 

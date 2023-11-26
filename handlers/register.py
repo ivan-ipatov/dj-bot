@@ -1,7 +1,6 @@
 from aiogram import Router
 from aiogram.types import Message
 from firebase_admin import db
-from termcolor import colored
 
 from filters.is_not_registered import IsNotRegistered
 from keyboards.builder_keyboard import build_kb
@@ -32,8 +31,7 @@ async def register(message: Message):
             }
         }
     })
-    print(colored(f'Пользователь {message.from_user.full_name} @{message.from_user.username} зарегистрировался',
-                  "magenta", "", ["bold"]))
+    print(f'Пользователь {message.from_user.full_name} @{message.from_user.username} зарегистрировался')
     await message.answer(
         "Привет 👋\n"
         "Я бот-помощник Ипатова Ивана,\n"

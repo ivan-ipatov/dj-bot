@@ -35,30 +35,6 @@ async def start(message: Message):
         reply_markup=build_kb("Привееет, отправь меня в /menu 😊"))
 
 
-# # /menu for admin user
-# @router.message(Command(commands=["menu", "меню", "менб", "vty."]), IsAdmin)
-# @router.message(F.text, lambda msg: any(x in msg.text.lower() for x in ["menu", "меню", "менб", "vty."]), IsAdmin)
-# async def admin_menu(message: Message):
-#     """
-#     Send admin menu keyboard
-#     :param message: Message
-#     """
-#     await message.answer("🌐 Выбери действие из меню:",
-#                          reply_markup=admin_menu.admin_menu(get_likes(), get_state_of_event_mode(),
-#                                                             get_state_of_order_songs_mode()))
-#
-# # /menu for admin user
-# @router.message(Command(commands=["menu", "меню", "менб", "vty."]), IsAdmin)
-# @router.message(F.text, lambda msg: any(x in msg.text.lower() for x in ["menu", "меню", "менб", "vty."]), IsAdmin)
-# async def prof_bureau_menu(message: Message):
-#     """
-#     Send admin menu keyboard
-#     :param message: Message
-#     """
-#     await message.answer("🌐 Выбери действие из меню:",
-#                          reply_markup=admin_menu.admin_menu(get_likes(), get_state_of_event_mode(),
-#                                                             get_state_of_order_songs_mode()))
-
 # /menu for no role user
 @router.message(Command(commands=["menu", "меню", "менб", "vty."]))
 @router.message(F.text, lambda msg: any(x in msg.text.lower() for x in ["menu", "меню", "менб", "vty."]))
@@ -71,7 +47,7 @@ async def menu(message: Message):
         await message.answer(f"⚙ Привет, {message.from_user.first_name}, сам знаешь, выбирай из меню.\n\n"
                              f"Состояния:\n"
                              f"✳ Режим мероприятия: {'✅' if get_state_of_event_mode() else '❌'}\n"
-                             f"🎶 Режим заказа песен: {'✅' if get_state_of_order_songs_mode() and get_state_of_event_mode()  else '❌'}\n"
+                             f"🎶 Режим заказа песен: {'✅' if get_state_of_order_songs_mode() and get_state_of_event_mode() else '❌'}\n"
                              f"😎 Ответственный за меро DJ: {db.reference('dj-name').get()}",
                              reply_markup=admin_keyboard.admin_menu(get_likes(), get_state_of_event_mode(),
                                                                     get_state_of_order_songs_mode()))

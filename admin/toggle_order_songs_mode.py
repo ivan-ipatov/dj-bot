@@ -1,5 +1,6 @@
 from firebase_admin import db
 
+
 def toggle_order_songs_mode():
     """
     Turn on/off order songs mode

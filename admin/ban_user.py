@@ -3,7 +3,6 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from firebase_admin import db
-from termcolor import colored
 
 from filters.is_admin import IsAdmin
 from handlers import basic
@@ -64,7 +63,7 @@ async def ban_user(message: Message, state: FSMContext, bot: Bot):
         if bool(db.reference(f'/users/{ban_id}/ban/banned').get()) is True:
             db.reference(f'/users/{ban_id}/ban/banned').set(False)
             db.reference(f'/users/{ban_id}/ban/ban_reason').set(reason)
-            print(colored(f"Админ: @{message.from_user.username} разбанил @{ban_username}, причина: {reason}", "green"))
+            print(f"Админ: @{message.from_user.username} разбанил @{ban_username}, причина: {reason}")
             await bot.send_message(int(ban_id), "Поздравляю, тебя разбанили 🎉\n\n"
                                                 "Советую тебе больше не нарушать правила 😉")
             await message.answer(f"✅ {ban_username} успешно разбанен")
@@ -72,7 +71,7 @@ async def ban_user(message: Message, state: FSMContext, bot: Bot):
         else:
             db.reference(f'/users/{ban_id}/ban/banned').set(True)
             db.reference(f'/users/{ban_id}/ban/ban_reason').set(reason)
-            print(colored(f"Админ: @{message.from_user.username} забанил @{ban_username}, причина: {reason}", "red"))
+            print(f"Админ: @{message.from_user.username} забанил @{ban_username}, причина: {reason}")
             await bot.send_message(int(ban_id), f"О нет, кажется, тебя забанил администратор 😨\n\n"
                                                 f"▶ Причина блокировки: {reason}\n"
                                                 f"✳ Для разбана обращаться: {db.reference('main-admin-username').get()}",
