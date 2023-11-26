@@ -2,6 +2,7 @@ from aiogram import Router, F
 from aiogram.filters import Command, CommandObject
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
+from termcolor import colored
 
 from admin.toggle_event_mode import get_reverted_state_of_event_mode, get_state_of_event_mode
 from admin.toggle_order_songs_mode import get_reverted_state_of_order_songs_mode, get_state_of_order_songs_mode
@@ -114,7 +115,9 @@ async def send_song_go_menu(message, state, data):
         f"{message.from_user.first_name} {message.from_user.last_name} @{message.from_user.username} ID: "
         f"{message.from_user.id}",
         data)
-    print(f'Заказана песня: "{data}", от пользователя: @{message.from_user.username} ID: {message.from_user.id}')
+    print(
+        colored(f'Заказана песня: "{data}", от пользователя: @{message.from_user.username} ID: {message.from_user.id}',
+                "magenta", "", ["bold"]))
     await state.clear()
     await message.answer("Песня отправлена 💙")
     await message.answer_sticker("CAACAgIAAxkBAAEKw-xlViRRN89v0aRX4lqLAAE_8-WkTtwAAhAgAAJ4iilJz8JKJAMRcx8zBA")

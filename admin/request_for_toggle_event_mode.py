@@ -3,6 +3,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from firebase_admin import db
+from termcolor import colored
 
 from admin.toggle_event_mode import toggle_event_mode, get_state_of_event_mode
 from filters.is_admin import IsAdmin
@@ -50,9 +51,9 @@ async def send_result(message: Message, state: FSMContext):
         toggle_event_mode()
         if get_state_of_event_mode() is True:
             db.reference('likes').set(0)
-            print(f"Админ: @{message.from_user.username} запустил режим мероприятия")
+            print(colored(f"Админ: @{message.from_user.username} запустил режим мероприятия", "cyan"))
             await message.answer("✅ Режим мероприятия успешно включён", reply_markup=rmk)
         else:
-            print(f"Админ: @{message.from_user.username} выключил режим мероприятия")
+            print(colored(f"Админ: @{message.from_user.username} выключил режим мероприятия", "light_red"))
             await message.answer("❌ Режим мероприятия успешно выключен", reply_markup=rmk)
     await basic.menu(message)
