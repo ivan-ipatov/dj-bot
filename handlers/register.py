@@ -31,7 +31,8 @@ async def register(message: Message):
             }
         }
     })
-    print(f'Пользователь {message.from_user.full_name} @{message.from_user.username} зарегистрировался')
+    print(f'Пользователь {message.from_user.full_name} @{message.from_user.username} ID: '
+          f'{message.from_user.id} зарегистрировался')
     await message.answer(
         "Привет 👋\n"
         "Я бот-помощник Ипатова Ивана,\n"

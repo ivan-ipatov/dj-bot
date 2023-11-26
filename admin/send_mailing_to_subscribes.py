@@ -65,21 +65,27 @@ async def copy_and_send_message_to_users(message: Message, bot: Bot, state: FSMC
             users = db.reference('users').get()
             count = 0
             for user, value in users.items():
-                if data["for_which_role"].lower() == 'для профбюро' or data["for_which_role"].lower() == 'для проф бюро':
+                if data["for_which_role"].lower() == 'для профбюро' or data[
+                    "for_which_role"].lower() == 'для проф бюро':
                     if value['role']['prof_bureau']:
                         count += 1
-                        await bot.copy_message(chat_id=user, from_chat_id=message.chat.id, message_id=message.message_id)
+                        await bot.copy_message(chat_id=user, from_chat_id=message.chat.id,
+                                               message_id=message.message_id)
                 else:
                     if value['subscription']:
                         count += 1
-                        await bot.copy_message(chat_id=user, from_chat_id=message.chat.id, message_id=message.message_id)
+                        await bot.copy_message(chat_id=user, from_chat_id=message.chat.id,
+                                               message_id=message.message_id)
             if data["for_which_role"].lower() == 'для профбюро' or data["for_which_role"].lower() == 'для проф бюро':
                 await message.answer(f"ℹ Ваше сообщение было отправлено {count} членам профбюро")
-                print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для профбюро\n"
-                      f"Текст: {message.text if message.text is not None else message.caption}")
+                print(
+                    f"Рассылка от {message.from_user.full_name} @{message.from_user.username} ID: "
+                    f"{message.from_user.id} для профбюро\n"
+                    f"Текст: {message.text if message.text is not None else message.caption}")
             else:
                 await message.answer(f"ℹ Ваше сообщение было отправлено {count} пользователям")
-                print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для всех\n"
+                print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} ID: "
+                      f"{message.from_user.id} для всех\n"
                       f"Текст: {message.text if message.text is not None else message.caption}")
     else:
         users = db.reference('users').get()
@@ -95,10 +101,12 @@ async def copy_and_send_message_to_users(message: Message, bot: Bot, state: FSMC
                     await bot.copy_message(chat_id=user, from_chat_id=message.chat.id, message_id=message.message_id)
         if data["for_which_role"].lower() == 'для профбюро' or data["for_which_role"].lower() == 'для проф бюро':
             await message.answer(f"ℹ Ваше сообщение было отправлено {count} членам профбюро")
-            print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для профбюро\n"
+            print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} ID: "
+                  f"{message.from_user.id} для профбюро\n"
                   f"Текст: {message.caption if message.caption is not None else '(только картинка)'}")
         else:
             await message.answer(f"ℹ Ваше сообщение было отправлено {count} пользователям")
-            print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} для всех\n"
+            print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} ID: "
+                  f"{message.from_user.id} для всех\n"
                   f"Текст: {message.caption if message.caption is not None else '(только картинка)'}")
     await basic.menu(message)

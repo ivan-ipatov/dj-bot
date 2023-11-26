@@ -63,7 +63,9 @@ async def ban_user(message: Message, state: FSMContext, bot: Bot):
         if bool(db.reference(f'/users/{ban_id}/ban/banned').get()) is True:
             db.reference(f'/users/{ban_id}/ban/banned').set(False)
             db.reference(f'/users/{ban_id}/ban/ban_reason').set(reason)
-            print(f"Админ: @{message.from_user.username} разбанил {ban_username}, причина: {reason}")
+            print(
+                f"Админ: @{message.from_user.username} ID: {message.from_user.id} разбанил {ban_username}, "
+                f"причина: {reason}")
             await bot.send_message(int(ban_id), "Поздравляю, тебя разбанили 🎉\n\n"
                                                 "Советую тебе больше не нарушать правила 😉")
             await message.answer(f"✅ {ban_username} успешно разбанен")
@@ -71,7 +73,9 @@ async def ban_user(message: Message, state: FSMContext, bot: Bot):
         else:
             db.reference(f'/users/{ban_id}/ban/banned').set(True)
             db.reference(f'/users/{ban_id}/ban/ban_reason').set(reason)
-            print(f"Админ: @{message.from_user.username} забанил {ban_username}, причина: {reason}")
+            print(
+                f"Админ: @{message.from_user.username} ID: {message.from_user.id} забанил {ban_username}, "
+                f"причина: {reason}")
             await bot.send_message(int(ban_id), f"О нет, кажется, тебя забанил администратор 😨\n\n"
                                                 f"▶ Причина блокировки: {reason}\n"
                                                 f"✳ Для разбана обращаться: {db.reference('main-admin-username').get()}",
