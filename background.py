@@ -4,10 +4,11 @@ from threading import Thread
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
-from flask import Flask, render_template, send_from_directory, request
+from flask import Flask, render_template
 
 from admin.toggle_event_mode import get_state_of_event_mode
 from admin.toggle_order_songs_mode import get_state_of_order_songs_mode
+
 
 # Fetch the service account key JSON file contents
 cred = credentials.Certificate('botdb.json')

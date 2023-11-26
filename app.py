@@ -30,15 +30,11 @@ async def main():
     await dp.start_polling(bot)
 
 
-def do_start_up():
-    """
-    Main function of start up
-    """
-    keep_alive()
-    while True:
-        try:
-            if __name__ == '__main__':
-                asyncio.run(main())
-        except Exception as e:
-            time.sleep(3)
-            print(e)
+keep_alive()
+while True:
+    try:
+        if __name__ == '__main__':
+            asyncio.run(main())
+    except Exception as e:
+        time.sleep(3)
+        print(e)
