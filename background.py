@@ -28,9 +28,9 @@ def home():
                                db.reference('dj-name').get()))
 
 
-@app.route('/robots.txt')
-def no_robots():
-    return send_from_directory(app.static_folder, request.path[1:])
+# @app.route('/robots.txt')
+# def no_robots():
+#     return send_from_directory(app.static_folder, request.path[1:])
 
 
 def run():
