@@ -9,6 +9,7 @@ from core.post_data_to_virtual_dj import post_data_to_virualdj
 from filters.is_prof_bureau import IsProfBureau
 from handlers import basic
 from handlers.basic import menu
+from keyboards.builder_keyboard import build_kb
 from utils.states import OrderSong
 
 """
@@ -49,7 +50,9 @@ async def song_command(message: Message, state: FSMContext, command: CommandObje
     """
     # If /song has args
     if command.args is not None:
-        return await send_song_go_menu(message, state, str(command.args))
+        if len(str(command.args)) > 3:
+            return await send_song_go_menu(message, state, str(command.args))
+        return await send_song_again_slash(message, state)
     await song_text_command(message, state)
 
 
@@ -70,7 +73,7 @@ async def song_text_command(message: Message, state: FSMContext):
     await message.answer("✨ Хорошо!\n"
                          "Напиши автора и название песни\n"
                          "в условном формате:\n\n"
-                         "✅ <code>Название песни - Автор песни</code>")
+                         "✅ <code>Название песни - Автор песни</code>", reply_markup=build_kb("Отмена"))
 
 
 @router.message(OrderSong.song)
@@ -82,22 +85,38 @@ async def checking_song_name(message: Message, state: FSMContext):
     """
     await state.update_data(song=message.text)
     data = await state.get_data()
-    if isinstance(data["song"], str) and len(data["song"]) > 3:  # if song is text message and more 4 letters
-        await send_song_go_menu(message, state, data)
+    if str(data["song"]).lower() != 'отмена':
+        if isinstance(data["song"], str) and len(data["song"]) > 3:  # if song is text message and more 4 letters
+            await send_song_go_menu(message, state, data)
+        else:
+            await send_song_again(message, state)
     else:
-        await send_song_again(message, state)
+        await state.clear()
+        await menu(message)
 
 
 @router.message(OrderSong.song)
 async def send_song_again(message: Message, state: FSMContext):
     """
-    Request to enter again
+    Request to enter again for not /song
     :param message: Message
     :param state: FSMContext
     """
     await state.set_state(OrderSong.song)
     await message.answer("Прости, но нужно написать песню в условном формате\n\n"
                          "✅ <code>Название песни - Автор песни</code>")
+
+
+@router.message(OrderSong.song)
+async def send_song_again_slash(message: Message, state: FSMContext):
+    """
+    Request to enter again for /song
+    :param message: Message
+    :param state: FSMContext
+    """
+    await state.set_state(OrderSong.song)
+    await message.answer("Прости, но нужно написать песню в условном формате\n\n"
+                         "✅ <code>/song Название песни - Автор песни</code>")
 
 
 # Go back function, clear state and post
