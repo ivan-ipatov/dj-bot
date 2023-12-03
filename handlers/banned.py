@@ -14,7 +14,7 @@ Used for send information to user, if banned
 router = Router()
 
 
-@router.message(IsBanned(), IsProfBureau or IsAdmin)
+@router.message(IsBanned(), lambda msg: IsProfBureau(msg).__call__() or IsAdmin(msg).__call__())
 async def banned(message: Message):
     """
     Send message to prof bureau user with ban information
