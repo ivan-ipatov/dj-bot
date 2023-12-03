@@ -40,10 +40,16 @@ async def set_message(message: Message, state: FSMContext):
     :param state: FSMContext
     """
     await state.update_data(for_which_role=message.text)
-    await state.set_state(Mailing.message)
-    await message.answer(f"Напиши сообщение, которое я скопирую и отправлю пользователям\n\n"
-                         f"ℹ Можно использовать картинку с текстом\n"
-                         f"✳ Если уже не нужно, нажмите отмена", reply_markup=build_kb("Отмена"))
+    data = await state.get_data()
+    if data["for_which_role"].lower() == 'для всех' or data["for_which_role"].lower() == 'для профбюро' or data[
+        "for_which_role"].lower() == 'для проф бюро':
+        await state.set_state(Mailing.message)
+        await message.answer(f"Напиши сообщение, которое я скопирую и отправлю пользователям\n\n"
+                             f"ℹ Можно использовать картинку с текстом\n"
+                             f"✳ Если уже не нужно, нажмите отмена", reply_markup=build_kb("Отмена"))
+    else:
+        await message.answer(f'➡ {message.from_user.first_name}, напиши либо: "Для всех", либо: "Для профбюро"')
+        await which_role(message, state)
 
 
 @router.message(Mailing.message)
