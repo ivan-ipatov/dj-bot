@@ -7,7 +7,7 @@ from aiogram import Bot, Dispatcher
 from admin import request_for_toggle_event_mode, request_for_toggle_order_songs_mode, ban_user, \
     send_mailing_to_subscribes, change_dj
 from background import keep_alive
-from handlers import basic, order_song, put_like, send_review, radio_institute, swear, register, banned
+from handlers import basic, order_song, put_like, send_review, radio_institute, swear, register, banned, maintenance
 
 """
 Main file of bot start up part 
@@ -20,7 +20,7 @@ async def main():
     """
     bot = Bot(token=os.environ['BOT_KEY'], parse_mode="HTML")
     dp = Dispatcher()
-    dp.include_routers(banned.router, register.router, swear.router, ban_user.router, change_dj.router,
+    dp.include_routers(maintenance.router, banned.router, register.router, swear.router, ban_user.router, change_dj.router,
                        send_mailing_to_subscribes.router, request_for_toggle_event_mode.router,
                        request_for_toggle_order_songs_mode.router,
                        order_song.router, put_like.router,

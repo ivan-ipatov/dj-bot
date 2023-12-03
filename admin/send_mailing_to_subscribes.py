@@ -18,8 +18,8 @@ router = Router()
 
 
 # /send or Mailing
-@router.message(IsAdmin(), Command("send"))
-@router.message(IsAdmin(), F.text.lower().in_(['рассылка', '📣 рассылка']))
+@router.message(lambda msg: IsAdmin(msg).__call__(), Command("send"))
+@router.message(lambda msg: IsAdmin(msg).__call__(), F.text.lower().in_(['рассылка', '📣 рассылка']))
 @router.message(lambda msg: IsProfBureau(msg).__call__(), Command("send"))
 @router.message(lambda msg: IsProfBureau(msg).__call__(), F.text.lower().in_(['рассылка', '📣 рассылка']))
 async def which_role(message: Message, state: FSMContext):

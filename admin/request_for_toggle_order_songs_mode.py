@@ -17,8 +17,8 @@ router = Router()
 
 
 # /ToggleOrderSongsMode or Turn on/off songs
-@router.message(IsAdmin(), Command("ToggleOrderSongsMode"))
-@router.message(IsAdmin(), F.text.lower().in_(["⛔ выключить песни", "✅ включить песни"]))
+@router.message(lambda msg: IsAdmin(msg).__call__(), Command("ToggleOrderSongsMode"))
+@router.message(lambda msg: IsAdmin(msg).__call__(), F.text.lower().in_(["⛔ выключить песни", "✅ включить песни"]))
 async def get_request(message: Message, state: FSMContext):
     """
     Alert with keyboard about toggle order songs mode

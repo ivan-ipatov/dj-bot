@@ -18,8 +18,8 @@ router = Router()
 
 
 # /ban or Ban user command
-@router.message(IsAdmin(), Command("ban"))
-@router.message(IsAdmin(), F.text.lower().in_(['⛔ забанить/разбанить пользователя', 'забанить', 'разбанить']))
+@router.message(lambda msg: IsAdmin(msg).__call__(), Command("ban"))
+@router.message(lambda msg: IsAdmin(msg).__call__(), F.text.lower().in_(['⛔ забанить/разбанить пользователя', 'забанить', 'разбанить']))
 async def ban_user_set_id(message: Message, state: FSMContext):
     """
     Requests Telegram user ID for blocking

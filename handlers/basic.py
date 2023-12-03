@@ -43,14 +43,24 @@ async def menu(message: Message):
     Send menu keyboard
     :param message: Message
     """
-    if IsAdmin.__call__(IsAdmin(), message):
-        await message.answer(f"⚙ Привет, {message.from_user.first_name}, сам знаешь, выбирай из меню.\n\n"
-                             f"Состояния:\n"
-                             f"✳ Режим мероприятия: {'✅' if get_state_of_event_mode() else '❌'}\n"
-                             f"🎶 Режим заказа песен: {'✅' if get_state_of_order_songs_mode() and get_state_of_event_mode() else '❌'}\n"
-                             f"😎 Ответственный за меро DJ: {db.reference('dj-name').get()}",
-                             reply_markup=admin_keyboard.admin_menu(get_likes(), get_state_of_event_mode(),
-                                                                    get_state_of_order_songs_mode()))
+    if IsAdmin(message).__call__():
+        if db.reference('maintenance-mode').get() is True:
+            await message.answer(f"⚙ Привет, {message.from_user.first_name}, сам знаешь, выбирай из меню.\n\n"
+                                 f"Состояния:\n"
+                                 f"✳ Режим мероприятия: {'✅' if get_state_of_event_mode() else '❌'}\n"
+                                 f"🎶 Режим заказа песен: {'✅' if get_state_of_order_songs_mode() and get_state_of_event_mode() else '❌'}\n"
+                                 f"😎 Ответственный за меро DJ: {db.reference('dj-name').get()}\n\n"
+                                 f"🔴 Включен режим технических работ (бот работает только для админов)",
+                                 reply_markup=admin_keyboard.admin_menu(get_likes(), get_state_of_event_mode(),
+                                                                        get_state_of_order_songs_mode()))
+        else:
+            await message.answer(f"⚙ Привет, {message.from_user.first_name}, сам знаешь, выбирай из меню.\n\n"
+                                 f"Состояния:\n"
+                                 f"✳ Режим мероприятия: {'✅' if get_state_of_event_mode() else '❌'}\n"
+                                 f"🎶 Режим заказа песен: {'✅' if get_state_of_order_songs_mode() and get_state_of_event_mode() else '❌'}\n"
+                                 f"😎 Ответственный за меро DJ: {db.reference('dj-name').get()}",
+                                 reply_markup=admin_keyboard.admin_menu(get_likes(), get_state_of_event_mode(),
+                                                                        get_state_of_order_songs_mode()))
     elif IsProfBureau(message).__call__():
         await message.answer(f"💙 Привет, {message.from_user.first_name}, выбери действие из меню:\n\n"
                              f"⭕ Не используй рассылку без надобности, иначе мне придётся её отключить\n"

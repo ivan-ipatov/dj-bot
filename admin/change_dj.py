@@ -16,8 +16,8 @@ Change global DJ name and URL for Virtual DJ
 router = Router()
 
 
-@router.message(IsAdmin(), Command("ChangeDJ"))
-@router.message(IsAdmin(), F.text.lower().in_(["🔄 смена", "смена", "сменить dj"]))
+@router.message(lambda msg: IsAdmin(msg).__call__(), Command("ChangeDJ"))
+@router.message(lambda msg: IsAdmin(msg).__call__(), F.text.lower().in_(["🔄 смена", "смена", "сменить dj"]))
 async def change_dj(message: Message):
     """
     Change DJ name and URL

@@ -18,8 +18,8 @@ router = Router()
 
 
 # /ToggleEventMode or Turn on/off event
-@router.message(IsAdmin(), Command("ToggleEventMode"))
-@router.message(IsAdmin(), F.text.lower().in_(["⛔ выключить меро", "✅ включить "
+@router.message(lambda msg: IsAdmin(msg).__call__(), Command("ToggleEventMode"))
+@router.message(lambda msg: IsAdmin(msg).__call__(), F.text.lower().in_(["⛔ выключить меро", "✅ включить "
                                                                    "мероприятие"]))
 async def get_request(message: Message, state: FSMContext):
     """
