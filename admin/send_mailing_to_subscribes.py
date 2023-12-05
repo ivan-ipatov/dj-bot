@@ -1,4 +1,5 @@
 from aiogram import Router, F, Bot
+from aiogram.exceptions import TelegramForbiddenError
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
@@ -74,14 +75,20 @@ async def copy_and_send_message_to_users(message: Message, bot: Bot, state: FSMC
                 if data["for_which_role"].lower() == 'для профбюро' or data[
                     "for_which_role"].lower() == 'для проф бюро':
                     if value['role']['prof_bureau']:
+                        try:
+                            await bot.copy_message(chat_id=user, from_chat_id=message.chat.id,
+                                                   message_id=message.message_id)
+                        except TelegramForbiddenError:
+                            continue
                         count += 1
-                        await bot.copy_message(chat_id=user, from_chat_id=message.chat.id,
-                                               message_id=message.message_id)
                 else:
                     if value['subscription']:
+                        try:
+                            await bot.copy_message(chat_id=user, from_chat_id=message.chat.id,
+                                                   message_id=message.message_id)
+                        except TelegramForbiddenError:
+                            continue
                         count += 1
-                        await bot.copy_message(chat_id=user, from_chat_id=message.chat.id,
-                                               message_id=message.message_id)
             if data["for_which_role"].lower() == 'для профбюро' or data["for_which_role"].lower() == 'для проф бюро':
                 await message.answer(f"ℹ Ваше сообщение было отправлено {count} членам профбюро")
                 print(
@@ -99,12 +106,20 @@ async def copy_and_send_message_to_users(message: Message, bot: Bot, state: FSMC
         for user, value in users.items():
             if data["for_which_role"].lower() == 'для профбюро' or data["for_which_role"].lower() == 'для проф бюро':
                 if value['role']['prof_bureau']:
+                    try:
+                        await bot.copy_message(chat_id=user, from_chat_id=message.chat.id,
+                                               message_id=message.message_id)
+                    except TelegramForbiddenError:
+                        continue
                     count += 1
-                    await bot.copy_message(chat_id=user, from_chat_id=message.chat.id, message_id=message.message_id)
             else:
                 if value['subscription']:
+                    try:
+                        await bot.copy_message(chat_id=user, from_chat_id=message.chat.id,
+                                               message_id=message.message_id)
+                    except TelegramForbiddenError:
+                        continue
                     count += 1
-                    await bot.copy_message(chat_id=user, from_chat_id=message.chat.id, message_id=message.message_id)
         if data["for_which_role"].lower() == 'для профбюро' or data["for_which_role"].lower() == 'для проф бюро':
             await message.answer(f"ℹ Ваше сообщение было отправлено {count} членам профбюро")
             print(f"Рассылка от {message.from_user.full_name} @{message.from_user.username} ID: "

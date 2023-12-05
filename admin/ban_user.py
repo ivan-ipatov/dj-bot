@@ -1,4 +1,5 @@
 from aiogram import Router, F, Bot
+from aiogram.exceptions import TelegramForbiddenError
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
@@ -19,7 +20,8 @@ router = Router()
 
 # /ban or Ban user command
 @router.message(lambda msg: IsAdmin(msg).__call__(), Command("ban"))
-@router.message(lambda msg: IsAdmin(msg).__call__(), F.text.lower().in_(['⛔ забанить/разбанить пользователя', 'забанить', 'разбанить']))
+@router.message(lambda msg: IsAdmin(msg).__call__(),
+                F.text.lower().in_(['⛔ забанить/разбанить пользователя', 'забанить', 'разбанить']))
 async def ban_user_set_id(message: Message, state: FSMContext):
     """
     Requests Telegram user ID for blocking
@@ -66,8 +68,11 @@ async def ban_user(message: Message, state: FSMContext, bot: Bot):
             print(
                 f"Админ: @{message.from_user.username} ID: {message.from_user.id} разбанил {ban_username}, "
                 f"причина: {reason}")
-            await bot.send_message(int(ban_id), "Поздравляю, тебя разбанили 🎉\n\n"
-                                                "Советую тебе больше не нарушать правила 😉")
+            try:
+                await bot.send_message(int(ban_id), "Поздравляю, тебя разбанили 🎉\n\n"
+                                                    "Советую тебе больше не нарушать правила 😉")
+            except TelegramForbiddenError:
+                pass
             await message.answer(f"✅ {ban_username} успешно разбанен")
         # If user isn't banned
         else:
@@ -76,10 +81,13 @@ async def ban_user(message: Message, state: FSMContext, bot: Bot):
             print(
                 f"Админ: @{message.from_user.username} ID: {message.from_user.id} забанил {ban_username}, "
                 f"причина: {reason}")
-            await bot.send_message(int(ban_id), f"О нет, кажется, тебя забанил администратор 😨\n\n"
-                                                f"▶ Причина блокировки: {reason}\n"
-                                                f"✳ Для разбана обращаться: {db.reference('main-admin-username').get()}",
-                                   reply_markup=rmk)
+            try:
+                await bot.send_message(int(ban_id), f"О нет, кажется, тебя забанил администратор 😨\n\n"
+                                                    f"▶ Причина блокировки: {reason}\n"
+                                                    f"✳ Для разбана обращаться: {db.reference('main-admin-username').get()}",
+                                       reply_markup=rmk)
+            except TelegramForbiddenError:
+                pass
             await message.answer(f"⛔ {db.reference(f'/users/{ban_id}/username').get()} успешно забанен")
     else:
         await message.answer("❌ Пользователя с таким ID не существует")
