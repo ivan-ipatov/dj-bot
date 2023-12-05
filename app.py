@@ -20,7 +20,8 @@ async def main():
     """
     bot = Bot(token=os.environ['BOT_KEY'], parse_mode="HTML")
     dp = Dispatcher()
-    dp.include_routers(maintenance.router, banned.router, register.router, swear.router, ban_user.router, change_dj.router,
+    dp.include_routers(maintenance.router, banned.router, register.router, swear.router, ban_user.router,
+                       change_dj.router,
                        send_mailing_to_subscribes.router, request_for_toggle_event_mode.router,
                        request_for_toggle_order_songs_mode.router,
                        order_song.router, put_like.router,
