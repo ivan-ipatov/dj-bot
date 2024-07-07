@@ -12,7 +12,7 @@ def admin_menu(get_likes, get_state_of_event_mode, get_state_of_order_songs_mode
     if get_state_of_event_mode and get_state_of_order_songs_mode:
         menu = ReplyKeyboardMarkup(keyboard=[
             [KeyboardButton(text="Заказать песню 🎶"), KeyboardButton(text="Оставить отзыв ✨")],
-            [KeyboardButton(text=f"Поставить лайк за мероприятие: {get_likes} 💙")],
+            [KeyboardButton(text=f"Поставить лайк мероприятию: {get_likes} 💙")],
             [KeyboardButton(text="⛔ Выключить меро"), KeyboardButton(text="⛔ Выключить песни")],
             [KeyboardButton(text="⛔ Забанить/разбанить пользователя")],
             [KeyboardButton(text="📣 Рассылка"), KeyboardButton(text="🔄 Смена")]
@@ -20,7 +20,7 @@ def admin_menu(get_likes, get_state_of_event_mode, get_state_of_order_songs_mode
     elif get_state_of_event_mode and not get_state_of_order_songs_mode:
         menu = ReplyKeyboardMarkup(keyboard=[
             [KeyboardButton(text="Заказать песню 🎶"), KeyboardButton(text="Оставить отзыв ✨")],
-            [KeyboardButton(text=f"Поставить лайк за мероприятие: {get_likes} 💙")],
+            [KeyboardButton(text=f"Поставить лайк мероприятию: {get_likes} 💙")],
             [KeyboardButton(text="⛔ Выключить меро"), KeyboardButton(text="✅ Включить песни")],
             [KeyboardButton(text="⛔ Забанить/разбанить пользователя")],
             [KeyboardButton(text="📣 Рассылка"), KeyboardButton(text="🔄 Смена")]
