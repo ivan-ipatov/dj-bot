@@ -2,3 +2,4 @@ aiogram
 requests
 flask
 firebase-admin
+python-dotenv

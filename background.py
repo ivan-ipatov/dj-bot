@@ -1,9 +1,6 @@
 import logging
-import os
 from threading import Thread
 
-import firebase_admin
-from firebase_admin import credentials
 from firebase_admin import db
 from flask import Flask, render_template, send_from_directory, request
 
@@ -14,16 +11,7 @@ from admin.toggle_order_songs_mode import get_state_of_order_songs_mode
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-# Fetch the service account key JSON file contents
-cred = credentials.Certificate('botdb.json')
-
-# Initialize the app with a service account, granting admin privileges
-fb_app = firebase_admin.initialize_app(cred, {
-    'databaseURL': os.environ['DB_URL']
-})
-
 app = Flask('')
-
 
 @app.route('/')
 def home():

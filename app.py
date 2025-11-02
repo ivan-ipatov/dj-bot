@@ -10,7 +10,8 @@ from admin import request_for_toggle_event_mode, request_for_toggle_order_songs_
     send_mailing_to_subscribes, change_dj
 from background import keep_alive
 from handlers import basic, order_song, put_like, send_review, radio_institute, swear, register, banned, maintenance
-
+import firebase_admin
+from firebase_admin import credentials
 """
 Main file of bot start up part 
 """
@@ -21,6 +22,12 @@ async def main():
     Bot start up
     """
     bot = Bot(token=os.environ['BOT_KEY'], default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+
+    cred = credentials.Certificate("botdb.json")
+    firebase_admin.initialize_app(cred , {
+        'databaseURL': os.environ['FIREBASE_DATABASE_URL'],
+    })
+
     dp = Dispatcher()
     dp.include_routers(maintenance.router, banned.router, register.router, swear.router, ban_user.router,
                        change_dj.router,
